@@ -73,9 +73,9 @@ if [[ ! -d $SCRIPT_DIR/Pods/icu4c-iosx/product ]]; then
         popd
     else
         pushd $SCRIPT_DIR
-        pod repo update
-        pod install --verbose
-        #pod update --verbose
+        bundle exec pod repo update
+        bundle exec pod install --verbose
+        #bundle exec pod update --verbose
         popd
     fi
     mkdir $SCRIPT_DIR/Pods/icu4c-iosx/product/lib
@@ -199,8 +199,8 @@ if [[ -f tools/build/src/user-config.jam ]]; then
 fi
 cat >> tools/build/src/user-config.jam <<EOF
 using darwin : ios : clang++ -arch arm64 -fembed-bitcode -isysroot $DEVSYSROOT/SDKs/iPhoneOS.sdk -mios-version-min=$IOS_VERSION
-: <striper> <root>$DEVSYSROOT 
-: <architecture>arm <target-os>iphone 
+: <striper> <root>$DEVSYSROOT
+: <architecture>arm <target-os>iphone
 ;
 EOF
 if [[ ! -z "${ICU_PATH}" ]]; then
@@ -220,8 +220,8 @@ if [[ -f tools/build/src/user-config.jam ]]; then
 fi
 cat >> tools/build/src/user-config.jam <<EOF
 using darwin : iossim : clang++ -arch $1 -fembed-bitcode-marker -isysroot $SIMSYSROOT/SDKs/iPhoneSimulator.sdk $2
-: <striper> <root>$SIMSYSROOT 
-: <architecture>$(boost_arc $1) <target-os>iphone 
+: <striper> <root>$SIMSYSROOT
+: <architecture>$(boost_arc $1) <target-os>iphone
 ;
 EOF
 if [[ ! -z "${ICU_PATH}" ]]; then
